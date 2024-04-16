@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "306983096617",
+    "project_id": "controledeponto-6d11c",
+    "storage_bucket": "controledeponto-6d11c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306983096617:android:f743b1dd2866e2d383a738",
+        "android_client_info": {
+          "package_name": "com.example.controledeponto"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPlqvBEcfw2Zoc6ucqvbNvjjjqOgI_Orc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
