@@ -38,6 +38,7 @@ class LoginActivity : AppCompatActivity() {
             if(task.isSuccessful) {
                 Log.d(TAG, "singInWithEmailAndPassword:Sucess")
                 val user = auth.currentUser
+                Log.d(TAG, "$user")
                 Toast.makeText(baseContext, "Logado com Sucesso! Usuário: $user", Toast.LENGTH_LONG).show()
             } else {
                 Log.w(TAG, "singInWithEmailAndPassword:Sucess", task.exception)
