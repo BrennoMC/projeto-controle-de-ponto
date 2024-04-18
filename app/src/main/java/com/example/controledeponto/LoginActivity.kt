@@ -1,5 +1,6 @@
 package com.example.controledeponto
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -26,6 +27,15 @@ class LoginActivity : AppCompatActivity() {
 
             if(email.isNotEmpty() && password.isNotEmpty()) {
                 signInWithEmailAndPassword(email, password)
+                val goToMenu = Intent(this@LoginActivity, CalendarActivity::class.java)
+
+                val user = auth.currentUser
+
+                goToMenu.putExtra("USER_EMAIL", user?.email)
+                goToMenu.putExtra("USER_NAME", user?.displayName)
+                goToMenu.putExtra("USER_ID", user?.providerId)
+
+                startActivity(goToMenu)
             } else {
                 Toast.makeText(baseContext, "Por favor, preencha todos os campos", Toast.LENGTH_LONG).show()
             }
@@ -39,7 +49,10 @@ class LoginActivity : AppCompatActivity() {
                 Log.d(TAG, "singInWithEmailAndPassword:Sucess")
                 val user = auth.currentUser
                 Log.d(TAG, "$user")
+
                 Toast.makeText(baseContext, "Logado com Sucesso! Usuário: $user", Toast.LENGTH_LONG).show()
+
+
             } else {
                 Log.w(TAG, "singInWithEmailAndPassword:Sucess", task.exception)
                 Toast.makeText(baseContext, "Authenication Failure", Toast.LENGTH_LONG).show()

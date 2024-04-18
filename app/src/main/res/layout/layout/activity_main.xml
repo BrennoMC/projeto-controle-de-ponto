@@ -62,14 +62,15 @@
                     android:background="@drawable/button_bg"
                     android:text="ENTRAR"
                     android:textColor="@color/dark"
-                    android:fontFamily="@font/poppins_bold"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/guideline"
                     app:layout_constraintHorizontal_bias="0.512"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintWidth_percent="0.53" />
+                    app:layout_constraintWidth_percent="0.53"
+                    android:fontFamily="@font/Poppins_Bold"
+                    />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
