@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-        val btnLogin = findViewById<androidx.appcompat.widget.AppCompatButton>(R.id.btn_login)
+        val btnLogin = findViewById<AppCompatButton>(R.id.btn_login)
 
         btnLogin.setOnClickListener {
             val email = findViewById<EditText>(R.id.loginEmail).text.toString()
