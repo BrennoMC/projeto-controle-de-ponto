@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_registro"
+        android:title="REGISTRO"
+        />
+    <item
+        android:id="@+id/bottom_relatorio"
+        android:title="RELATÓRIO"
+        />
+    <item
+        android:id="@+id/bottom_calendario"
+        android:title="CALENDÁRIO"
+        />
+
+</menu>

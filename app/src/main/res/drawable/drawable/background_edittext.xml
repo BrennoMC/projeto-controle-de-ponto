@@ -1,0 +1,5 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="8dp" /> <!-- Define um raio de 8dp para os cantos -->
+    <solid android:color="#3A5485" /> <!-- Cor de fundo do EditText --> <!-- Substitua AA, RR, GG e BB pelos valores de alfa, vermelho, verde e azul, respectivamente -->
+</shape>
