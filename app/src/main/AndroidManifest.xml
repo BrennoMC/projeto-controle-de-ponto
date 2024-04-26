@@ -15,6 +15,15 @@
         android:theme="@style/Theme.ControleDePonto"
         tools:targetApi="31">
         <activity
+            android:name=".SignInActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".registerActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
@@ -26,7 +35,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CalendarActivity" android:exported="false"/>
+        <activity
+            android:name=".CalendarActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

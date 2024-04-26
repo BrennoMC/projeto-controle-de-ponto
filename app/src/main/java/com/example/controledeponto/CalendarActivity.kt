@@ -43,6 +43,8 @@ class CalendarActivity : AppCompatActivity() {
 
         val userId = intent.getStringExtra("USER_ID")
 
+        val currentUser = intent.getStringExtra("CURRENT_USER")
+
         val btn = findViewById<ImageView>(R.id.btn_sair)
 
         btn.setOnClickListener {
