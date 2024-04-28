@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity() {
 
         val btnRegister = findViewById<TextView>(R.id.txtRegister)
 
+        val btnForgotPassword = findViewById<TextView>(R.id.txtForgotPassword)
+
         btnLogin.setOnClickListener {
             val email = findViewById<EditText>(R.id.loginEmail).text.toString()
             val password = findViewById<EditText>(R.id.loginPassword).text.toString()
@@ -57,6 +59,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(goToRegister)
         }
 
+        btnForgotPassword.setOnClickListener {
+            val goToForgotPassword = Intent(this, ForgotPasswordActivity::class.java)
+            startActivity(goToForgotPassword)
+        }
+
     }
 
     private fun signInWithEmailAndPassword(email: String, password: String) {
@@ -70,14 +77,17 @@ class MainActivity : AppCompatActivity() {
 
                 goToMenu.putExtra("USER_EMAIL", user?.email)
                 goToMenu.putExtra("USER_NAME", user?.displayName)
-                goToMenu.putExtra("USER_ID", user?.providerId)
-                goToMenu.putExtra("CURRENT_USER", "AAA")
+                goToMenu.putExtra("USER_ID",user?.uid)
 
                 startActivity(goToMenu)
 
             } else {
-                Log.w(TAG, "singInWithEmailAndPassword:Sucess", task.exception)
-                Toast.makeText(baseContext, "Authenication Failure", Toast.LENGTH_LONG).show()
+                if (task.exception?.message == "The supplied auth credential is incorrect, malformed or has expired.") {
+                    Toast.makeText(baseContext, "As informações fornecidas estão incorretas", Toast.LENGTH_LONG).show()
+                } else {
+                    Log.w(TAG, "singInWithEmailAndPassword:Sucess", task.exception)
+                    Toast.makeText(baseContext, "Authenication Failure", Toast.LENGTH_LONG).show()
+                }
             }
         }
     }
