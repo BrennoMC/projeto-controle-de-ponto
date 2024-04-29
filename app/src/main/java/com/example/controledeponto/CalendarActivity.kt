@@ -10,15 +10,22 @@ import android.widget.TextView;
 import java.util.Date
 import java.util.Locale
 import android.os.Handler
+import android.util.Log
 import android.widget.ImageView
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 class CalendarActivity : AppCompatActivity() {
     private lateinit var textView: TextView
     private lateinit var handler: Handler
     private lateinit var timeUpdater: Runnable
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calendar)
+
+        auth = Firebase.auth
 
         textView = findViewById<TextView>(R.id.horario_text)
 
@@ -43,11 +50,15 @@ class CalendarActivity : AppCompatActivity() {
 
         val userId = intent.getStringExtra("USER_ID")
 
-        val btn = findViewById<ImageView>(R.id.btn_sair)
+        val btnSignOut = findViewById<ImageView>(R.id.btn_sair)
 
-        btn.setOnClickListener {
-            val goToMain = Intent(this, MainActivity::class.java)
-            startActivity(goToMain)
+        btnSignOut.setOnClickListener {
+            auth.signOut()
+
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
         }
 
         val textVIewId = findViewById<TextView>(R.id.textViewMatricula)

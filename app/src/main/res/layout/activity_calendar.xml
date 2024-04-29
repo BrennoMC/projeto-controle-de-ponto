@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".LoginActivity" >
+    tools:context=".CalendarActivity" >
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -104,7 +104,7 @@
     <View
         android:id="@+id/background_registro"
         android:layout_width="207dp"
-        android:layout_height="57dp"
+        android:layout_height="70dp"
         android:background="@drawable/matricula_border"
         android:translationZ="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"

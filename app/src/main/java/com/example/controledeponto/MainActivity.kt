@@ -4,7 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import com.google.firebase.Firebase
@@ -21,24 +23,45 @@ class MainActivity : AppCompatActivity() {
 
         val btnLogin = findViewById<AppCompatButton>(R.id.btn_login)
 
+        val btnRegister = findViewById<TextView>(R.id.txtRegister)
+
+        val btnForgotPassword = findViewById<TextView>(R.id.txtForgotPassword)
+
         btnLogin.setOnClickListener {
             val email = findViewById<EditText>(R.id.loginEmail).text.toString()
             val password = findViewById<EditText>(R.id.loginPassword).text.toString()
 
             if(email.isNotEmpty() && password.isNotEmpty()) {
-                signInWithEmailAndPassword(email, password)
-                val goToMenu = Intent(this@MainActivity, CalendarActivity::class.java)
+                if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    //Toast.makeText(baseContext, "É um email valido", Toast.LENGTH_LONG).show()
 
-                val user = auth.currentUser
+                    val emailCut = email.split("@")
+                    val emailDomain = emailCut[1]
+                    val emailModel = "puccampinas.edu.br"
 
-                goToMenu.putExtra("USER_EMAIL", user?.email)
-                goToMenu.putExtra("USER_NAME", user?.displayName)
-                goToMenu.putExtra("USER_ID", user?.providerId)
+                    if(emailDomain == emailModel) {
+                        signInWithEmailAndPassword(email, password)
+                    } else {
+                        Toast.makeText(baseContext, "Não é um email PUC", Toast.LENGTH_LONG).show()
+                    }
 
-                startActivity(goToMenu)
+                } else {
+                    Toast.makeText(baseContext, "Não é um email valido", Toast.LENGTH_LONG).show()
+                }
+
             } else {
                 Toast.makeText(baseContext, "Por favor, preencha todos os campos", Toast.LENGTH_LONG).show()
             }
+        }
+
+        btnRegister.setOnClickListener {
+            val goToRegister = Intent(this@MainActivity, SignInActivity::class.java)
+            startActivity(goToRegister)
+        }
+
+        btnForgotPassword.setOnClickListener {
+            val goToForgotPassword = Intent(this, ForgotPasswordActivity::class.java)
+            startActivity(goToForgotPassword)
         }
 
     }
@@ -50,12 +73,21 @@ class MainActivity : AppCompatActivity() {
                 val user = auth.currentUser
                 Log.d(TAG, "$user")
 
-                Toast.makeText(baseContext, "Logado com Sucesso! Usuário: $user", Toast.LENGTH_LONG).show()
+                val goToMenu = Intent(this@MainActivity, CalendarActivity::class.java)
 
+                goToMenu.putExtra("USER_EMAIL", user?.email)
+                goToMenu.putExtra("USER_NAME", user?.displayName)
+                goToMenu.putExtra("USER_ID",user?.uid)
+
+                startActivity(goToMenu)
 
             } else {
-                Log.w(TAG, "singInWithEmailAndPassword:Sucess", task.exception)
-                Toast.makeText(baseContext, "Authenication Failure", Toast.LENGTH_LONG).show()
+                if (task.exception?.message == "The supplied auth credential is incorrect, malformed or has expired.") {
+                    Toast.makeText(baseContext, "As informações fornecidas estão incorretas", Toast.LENGTH_LONG).show()
+                } else {
+                    Log.w(TAG, "singInWithEmailAndPassword:Sucess", task.exception)
+                    Toast.makeText(baseContext, "Authenication Failure", Toast.LENGTH_LONG).show()
+                }
             }
         }
     }

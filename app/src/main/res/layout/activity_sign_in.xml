@@ -2,10 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_blue"
-    tools:context=".MainActivity" >
+    tools:context=".SignInActivity">
 
     <ImageView
         android:id="@+id/imageView6"
@@ -16,35 +17,65 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.149"
+        app:layout_constraintVertical_bias="0.059"
         app:srcCompat="@drawable/logo" />
 
+    <ImageView
+        android:id="@+id/imageView20"
+        android:layout_width="189dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_login"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6"
+        app:layout_constraintVertical_bias="0.01"
+        app:srcCompat="@drawable/ctrldeponto" />
+
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_signIn"
         android:layout_width="0dp"
         android:layout_height="55dp"
-        android:layout_marginBottom="132dp"
+        android:layout_marginBottom="96dp"
         android:background="@drawable/button_bg"
         android:fontFamily="@font/poppins_bold"
-        android:text="ENTRAR"
+        android:text="CADASTRAR"
         android:textColor="@color/dark"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintWidth_percent="0.53" />
 
     <EditText
-        android:id="@+id/loginEmail"
+        android:id="@+id/registerName"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="26dp"
         android:background="@drawable/background_edittext"
         android:ems="10"
         android:fontFamily="@font/poppins_bold"
-        android:hint="USUÁRIO"
+        android:hint="NOME"
+        android:inputType="text"
+        android:padding="15dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView20" />
+
+    <EditText
+        android:id="@+id/registerEmail"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/background_edittext"
+        android:ems="10"
+        android:fontFamily="@font/poppins_bold"
+        android:hint="EMAIL"
         android:inputType="textEmailAddress"
         android:padding="15dp"
         android:textColor="@color/white"
@@ -52,10 +83,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView20" />
+        app:layout_constraintTop_toBottomOf="@+id/registerName" />
 
     <EditText
-        android:id="@+id/loginPassword"
+        android:id="@+id/registerPassword"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -70,32 +101,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/registerEmail" />
 
-    <TextView
-        android:id="@+id/txtForgotPassword"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/registerConfirmPassword"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/background_edittext"
+        android:ems="10"
         android:fontFamily="@font/poppins_bold"
-        android:text="Esqueci a senha"
+        android:hint="CONFIRMAR SENHA"
+        android:inputType="textPassword"
+        android:padding="15dp"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="0.507"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginPassword" />
-
-    <ImageView
-        android:id="@+id/imageView20"
-        android:layout_width="189dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_login"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6"
-        app:layout_constraintVertical_bias="0.013"
-        app:srcCompat="@drawable/ctrldeponto" />
+        app:layout_constraintTop_toBottomOf="@+id/registerPassword" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -104,33 +128,4 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.99" />
 
-    <TextView
-        android:id="@+id/txtRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Ainda não possue cadastro? Registre-se"
-        android:fontFamily="@font/poppins_bold"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
-
-
-
-    <!--<ImageView
-        android:id="@+id/imageView18"
-        android:layout_width="384dp"
-        android:layout_height="144dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/bg" />-->
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
-
