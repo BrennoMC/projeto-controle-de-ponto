@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".CalendarActivity" >
+    tools:context=".LoginActivity" >
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -14,19 +15,20 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:id="@+id/bottom_navigation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_menu"
         android:background="#1A1C3D"
+        app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
+        app:itemIconSize="20dp"
         app:itemTextAppearanceActive="@style/BottomNavigationViewTextStyle"
         app:itemTextAppearanceInactive="@style/BottomNavigationViewTextStyle"
         />
-
->
+    >
     <ImageView
         android:id="@+id/logo"
         android:layout_width="84dp"
@@ -38,17 +40,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/header"
         app:srcCompat="@drawable/logo" />
-
-    <ImageView
-        android:id="@+id/icone_relogio"
-        android:layout_width="200dp"
-        android:layout_height="150dp"
-        android:translationZ="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        app:layout_constraintEnd_toEndOf="@+id/frame_container"
-        app:layout_constraintStart_toStartOf="@+id/frame_container"
-        app:layout_constraintTop_toBottomOf="@+id/background_registro"
-        app:srcCompat="@drawable/icone_relogio" />
 
     <ImageView
         android:id="@+id/title"
@@ -104,7 +95,7 @@
     <View
         android:id="@+id/background_registro"
         android:layout_width="207dp"
-        android:layout_height="70dp"
+        android:layout_height="57dp"
         android:background="@drawable/matricula_border"
         android:translationZ="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
@@ -154,6 +145,23 @@
         app:layout_constraintEnd_toEndOf="@+id/calendars"
         app:layout_constraintStart_toStartOf="@+id/calendars"
         app:layout_constraintTop_toTopOf="@+id/calendars"
+        app:layout_constraintVertical_bias=".8"
+        app:layout_constraintHorizontal_bias="0.5"
+        />
+    <TextView
+        android:id="@+id/segunda_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="@+id/calendars"
+        app:layout_constraintEnd_toEndOf="@+id/calendars"
+        app:layout_constraintStart_toStartOf="@+id/calendars"
+        app:layout_constraintTop_toTopOf="@+id/calendars"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.5"
         />
 
     <TextView
@@ -182,7 +190,25 @@
         app:layout_constraintBottom_toBottomOf="@+id/calendars2"
         app:layout_constraintEnd_toEndOf="@+id/calendars2"
         app:layout_constraintStart_toStartOf="@+id/calendars2"
-        app:layout_constraintTop_toTopOf="@+id/calendars2" />
+        app:layout_constraintTop_toTopOf="@+id/calendars2"
+        app:layout_constraintVertical_bias="0.8"
+        app:layout_constraintHorizontal_bias="0.5"
+        />
+    <TextView
+        android:id="@+id/terca_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="@+id/calendars2"
+        app:layout_constraintEnd_toEndOf="@+id/calendars2"
+        app:layout_constraintStart_toStartOf="@+id/calendars2"
+        app:layout_constraintTop_toTopOf="@+id/calendars2"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.5"
+        />
 
     <TextView
         android:id="@+id/calendars3"
@@ -211,7 +237,26 @@
         app:layout_constraintBottom_toBottomOf="@+id/calendars3"
         app:layout_constraintEnd_toEndOf="@+id/calendars3"
         app:layout_constraintStart_toStartOf="@+id/calendars3"
-        app:layout_constraintTop_toTopOf="@+id/calendars3" />
+        app:layout_constraintTop_toTopOf="@+id/calendars3"
+        app:layout_constraintVertical_bias="0.8"
+        app:layout_constraintHorizontal_bias="0.5"
+        />
+
+    <TextView
+        android:id="@+id/quarta_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="@+id/calendars3"
+        app:layout_constraintEnd_toEndOf="@+id/calendars3"
+        app:layout_constraintStart_toStartOf="@+id/calendars3"
+        app:layout_constraintTop_toTopOf="@+id/calendars3"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.5"
+        />
 
     <TextView
         android:id="@+id/calendars4"
@@ -227,6 +272,22 @@
         app:layout_constraintVertical_bias="0.865" />
 
     <TextView
+        android:id="@+id/quinta_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="@+id/calendars4"
+        app:layout_constraintEnd_toEndOf="@+id/calendars4"
+        app:layout_constraintStart_toStartOf="@+id/calendars4"
+        app:layout_constraintTop_toTopOf="@+id/calendars4"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.5"
+        />
+
+    <TextView
         android:id="@+id/quinta_text"
         android:layout_width="29dp"
         android:layout_height="31dp"
@@ -240,7 +301,9 @@
         app:layout_constraintEnd_toEndOf="@+id/calendars4"
         app:layout_constraintStart_toStartOf="@+id/calendars4"
         app:layout_constraintTop_toTopOf="@+id/calendars4"
-   />
+        app:layout_constraintVertical_bias="0.8"
+        app:layout_constraintHorizontal_bias="0.5"
+        />
 
     <TextView
         android:id="@+id/calendars5"
@@ -270,8 +333,26 @@
         app:layout_constraintBottom_toBottomOf="@+id/calendars5"
         app:layout_constraintEnd_toEndOf="@+id/calendars5"
         app:layout_constraintStart_toStartOf="@+id/calendars5"
-        app:layout_constraintTop_toTopOf="@+id/calendars5" />
+        app:layout_constraintTop_toTopOf="@+id/calendars5"
+        app:layout_constraintVertical_bias="0.8"
+        app:layout_constraintHorizontal_bias="0.5"
+        />
 
+    <TextView
+        android:id="@+id/sexta_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:translationZ="90dp"
+        app:layout_constraintBottom_toBottomOf="@+id/calendars5"
+        app:layout_constraintEnd_toEndOf="@+id/calendars5"
+        app:layout_constraintStart_toStartOf="@+id/calendars5"
+        app:layout_constraintTop_toTopOf="@+id/calendars5"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintHorizontal_bias="0.5"
+        />
     <TextView
         android:id="@+id/textView"
         android:layout_width="161dp"
