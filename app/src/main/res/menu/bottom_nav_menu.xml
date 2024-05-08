@@ -3,14 +3,17 @@
     <item
         android:id="@+id/bottom_registro"
         android:title="REGISTRO"
+        android:icon="@drawable/ic_clock_bottom"
         />
     <item
         android:id="@+id/bottom_relatorio"
         android:title="RELATÓRIO"
+        android:icon="@drawable/ic_report_bottom"
         />
     <item
         android:id="@+id/bottom_calendario"
         android:title="CALENDÁRIO"
+        android:icon="@drawable/ic_calendar_bottom"
         />
 
 </menu>

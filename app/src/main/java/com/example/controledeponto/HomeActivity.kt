@@ -3,27 +3,35 @@ package com.example.controledeponto
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import android.widget.TextView;
 import java.util.Date
 import java.util.Locale
 import android.os.Handler
-import android.util.Log
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
+import com.example.controledeponto.databinding.ActivityHomeBinding
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 
-class CalendarActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
     private lateinit var textView: TextView
     private lateinit var handler: Handler
     private lateinit var timeUpdater: Runnable
     private lateinit var auth: FirebaseAuth
+    private lateinit var binding: ActivityHomeBinding
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_calendar)
+
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
 
         auth = Firebase.auth
 
@@ -52,6 +60,7 @@ class CalendarActivity : AppCompatActivity() {
 
         val btnSignOut = findViewById<ImageView>(R.id.btn_sair)
 
+
         btnSignOut.setOnClickListener {
             auth.signOut()
 
@@ -60,6 +69,10 @@ class CalendarActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+
+
+
 
         val textVIewId = findViewById<TextView>(R.id.textViewMatricula)
         textVIewId.text = "Matrícula: $userId"
@@ -71,6 +84,14 @@ class CalendarActivity : AppCompatActivity() {
         val currentTime: String = dateFormat.format(Date())
 
         textView.text = currentTime
+
+        initNavigation()
+    }
+
+    private fun initNavigation () {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+        NavigationUI.setupWithNavController(binding.btnv, navController)
     }
     override fun onDestroy() {
         super.onDestroy()

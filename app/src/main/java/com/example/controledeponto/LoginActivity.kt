@@ -27,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
 
             if(email.isNotEmpty() && password.isNotEmpty()) {
                 signInWithEmailAndPassword(email, password)
-                val goToMenu = Intent(this@LoginActivity, CalendarActivity::class.java)
+                val goToMenu = Intent(this@LoginActivity, HomeActivity::class.java)
 
                 val user = auth.currentUser
 

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CalendarFragment">
+
+    <RelativeLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F2FAFF">
+
+        <TextView
+            android:id="@+id/txtTitulo"
+            android:layout_width="261dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="81dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="69dp"
+            android:layout_marginBottom="656dp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:text="CALENDÁRIO SEMANAL"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/txtSubtitulo"
+            android:layout_width="334dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="93dp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="609dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Defina seu horário semanal"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="94dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="303dp"
+            android:layout_marginBottom="513dp"
+            android:background="@drawable/border_dia"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:text="SEG"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/txtEdit"
+            android:layout_width="73dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="156dp"
+            android:layout_marginBottom="519dp"
+            android:background="@drawable/border_editar"
+            android:drawableLeft="@drawable/ic_edit"
+            android:text="Editar"
+            android:textAlignment="viewEnd"
+            android:textColor="#FFFFFF"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/txtAdd"
+            android:layout_width="73dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="81dp"
+            android:layout_marginBottom="518dp"
+            android:background="@drawable/border_adicionar"
+            android:drawableLeft="@drawable/ic_add"
+            android:text="Novo"
+            android:textAlignment="viewEnd"
+            android:textColor="#FFFFFF"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/txtDelete"
+            android:layout_width="73dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="518dp"
+            android:background="@drawable/border_excluir"
+            android:drawableLeft="@drawable/ic_delete"
+            android:text="Excluir"
+            android:textAlignment="viewEnd"
+            android:textColor="#FFFFFF"
+            android:textSize="12dp" />
+
+        <EditText
+            android:id="@+id/editHorarioEntradaSeg"
+            android:layout_width="126dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="268dp"
+            android:layout_marginBottom="441dp"
+            android:background="@drawable/border_time"
+            android:ems="10"
+            android:inputType="time" />
+
+        <TextView
+            android:id="@+id/txtLabelEntrada"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="344dp"
+            android:layout_marginBottom="479dp"
+            android:text="Entrada" />
+
+        <EditText
+            android:id="@+id/editHorarioSaidaSeg"
+            android:layout_width="126dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="85dp"
+            android:layout_marginBottom="443dp"
+            android:background="@drawable/border_time"
+            android:ems="10"
+            android:inputType="time" />
+
+
+        <TextView
+            android:id="@+id/txtLabelSaida"
+            android:layout_width="57dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="152dp"
+            android:layout_marginBottom="480dp"
+            android:text="Saída" />
+
+        <TextView
+            android:id="@+id/textViewTer"
+            android:layout_width="94dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="305dp"
+            android:layout_marginBottom="367dp"
+            android:background="@drawable/border_dia"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:text="TER"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/txtEditTer"
+            android:layout_width="73dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="154dp"
+            android:layout_marginBottom="371dp"
+            android:background="@drawable/border_editar"
+            android:drawableLeft="@drawable/ic_edit"
+            android:text="Editar"
+            android:textAlignment="viewEnd"
+            android:textColor="#FFFFFF"
+            android:textSize="12dp" />
+
+
+        <TextView
+            android:id="@+id/txtAddTer"
+            android:layout_width="73dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="77dp"
+            android:layout_marginBottom="371dp"
+            android:background="@drawable/border_adicionar"
+            android:drawableLeft="@drawable/ic_add"
+            android:text="Novo"
+            android:textAlignment="viewEnd"
+            android:textColor="#FFFFFF"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/txtDeleteTer"
+            android:layout_width="73dp"
+            android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="372dp"
+            android:background="@drawable/border_excluir"
+            android:drawableLeft="@drawable/ic_delete"
+            android:text="Excluir"
+            android:textAlignment="viewEnd"
+            android:textColor="#FFFFFF"
+            android:textSize="12dp" />
+
+        <EditText
+            android:id="@+id/editHorarioEntradaTer"
+            android:layout_width="126dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="269dp"
+            android:layout_marginBottom="287dp"
+            android:background="@drawable/border_time"
+            android:ems="10"
+            android:inputType="time" />
+
+        <TextView
+            android:id="@+id/txtLabelEntradaTer"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="332dp"
+            android:layout_marginBottom="323dp"
+            android:text="Entrada" />
+
+        <EditText
+            android:id="@+id/editHorarioSaidaTer"
+            android:layout_width="126dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="90dp"
+            android:layout_marginBottom="286dp"
+            android:background="@drawable/border_time"
+            android:ems="10"
+            android:inputType="time" />
+
+        <TextView
+            android:id="@+id/txtLabelSaidaTer"
+            android:layout_width="57dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="155dp"
+            android:layout_marginBottom="323dp"
+            android:text="Saída" />
+
+        <Button
+            android:id="@+id/btnSalvar"
+            android:layout_width="78dp"
+            android:layout_height="38dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="559dp"
+            android:padding="1dp"
+            android:text="Salvar"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+
+</FrameLayout>

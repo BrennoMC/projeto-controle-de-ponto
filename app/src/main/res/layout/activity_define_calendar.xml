@@ -25,7 +25,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_menu"
+        app:menu="@menu/bottom_nav_menu"
         android:background="#1A1C3D"
         app:itemTextColor="@color/white"
         app:itemTextAppearanceActive="@style/BottomNavigationViewTextStyle"

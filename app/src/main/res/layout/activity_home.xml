@@ -5,28 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".CalendarActivity" >
+    tools:context=".HomeActivity">
+
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/frame_container"/>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/bottom_navigation"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_menu"
-        android:background="#1A1C3D"
-        app:itemTextColor="@color/white"
-        app:itemTextAppearanceActive="@style/BottomNavigationViewTextStyle"
-        app:itemTextAppearanceInactive="@style/BottomNavigationViewTextStyle"
+        android:id="@+id/frame_container"
         />
 
->
     <ImageView
         android:id="@+id/logo"
         android:layout_width="84dp"
@@ -125,7 +112,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.214" />
-    />
     <TextView
         android:id="@+id/calendars"
         android:layout_width="50dp"
@@ -240,7 +226,7 @@
         app:layout_constraintEnd_toEndOf="@+id/calendars4"
         app:layout_constraintStart_toStartOf="@+id/calendars4"
         app:layout_constraintTop_toTopOf="@+id/calendars4"
-   />
+        />
 
     <TextView
         android:id="@+id/calendars5"
@@ -295,7 +281,7 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         android:translationZ="200dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintBottom_toTopOf="@+id/btnv"
         app:layout_constraintEnd_toEndOf="@+id/view"
         app:layout_constraintHorizontal_bias="0.500"
         app:layout_constraintStart_toStartOf="@+id/view"
@@ -343,5 +329,32 @@
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="@+id/view"
         app:srcCompat="@drawable/config_icon" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnv"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/main_graph"/>
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/btnv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu"
+        android:background="#1A1C3D"
+        app:itemTextColor="@color/white"
+        app:itemTextAppearanceActive="@style/BottomNavigationViewTextStyle"
+        app:itemTextAppearanceInactive="@style/BottomNavigationViewTextStyle"
+
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
