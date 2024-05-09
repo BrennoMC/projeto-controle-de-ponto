@@ -1,10 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
+    <View
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:background="#1A1C3D"
+        android:translationZ="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <!-- Tornar parte da homeactivity-->
+    <ImageView
+        android:id="@+id/title"
+        android:layout_width="114dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:translationZ="50dp"
+        app:srcCompat="@drawable/ctrldeponto" />
+
+    <ImageView
+        android:id="@+id/btn_sair"
+        android:layout_width="76dp"
+        android:layout_height="44dp"
+        android:layout_gravity="right"
+        android:cropToPadding="false"
+        android:translationZ="50dp"
+        android:layout_marginTop="16dp"
+        app:srcCompat="@drawable/btn_sair" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="76dp"
+        android:layout_height="44dp"
+        android:layout_gravity="left"
+        android:cropToPadding="false"
+        android:translationZ="50dp"
+        android:layout_marginTop="16dp"
+        app:srcCompat="@drawable/logo" />
+
+
+
+
+    <View
+        android:id="@+id/middle_view"
+        android:layout_width="270dp"
+        android:layout_height="100dp"
+        android:background="@drawable/border"
+        android:translationZ="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.519" />
+
+    <View
+        android:id="@+id/background_registro"
+        android:layout_width="207dp"
+        android:layout_height="57dp"
+        android:background="@drawable/matricula_border"
+        android:translationZ="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="@+id/frame_container"
+        app:layout_constraintStart_toStartOf="@+id/frame_container"
+        app:layout_constraintTop_toTopOf="@+id/horario_text"
+        app:layout_constraintVertical_bias="0.11" />
 
 
 </FrameLayout>

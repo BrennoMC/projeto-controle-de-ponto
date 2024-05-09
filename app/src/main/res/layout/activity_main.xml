@@ -109,7 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:text="Ainda não possue cadastro? Registre-se"
+        android:text="Ainda não possui cadastro? Registre-se"
         android:fontFamily="@font/poppins_bold"
         android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/guideline"

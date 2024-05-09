@@ -11,9 +11,12 @@ import android.os.Handler
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.example.controledeponto.databinding.ActivityHomeBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -23,22 +26,21 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var handler: Handler
     private lateinit var timeUpdater: Runnable
     private lateinit var auth: FirebaseAuth
-    private lateinit var binding: ActivityHomeBinding
-    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_home)
 
-        binding = ActivityHomeBinding.inflate(layoutInflater)
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.btnv)
+        val navController = findNavController(R.id.fragment)
+        bottomNavigationView.setupWithNavController(navController)
 
-        setContentView(binding.root)
+        //auth = Firebase.auth
 
-        auth = Firebase.auth
+        //textView = findViewById<TextView>(R.id.horario_text)
 
-        textView = findViewById<TextView>(R.id.horario_text)
-
-        handler = Handler()
-
+        //handler = Handler()
+/*
         timeUpdater = object : Runnable {
             override fun run() {
                 val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
@@ -49,18 +51,20 @@ class HomeActivity : AppCompatActivity() {
                 handler.postDelayed(this, 1000)
             }
         }
-
-        handler.post(timeUpdater)
-
-        val userEmail = intent.getStringExtra("USER_EMAIL")
-
-        val userName = intent.getStringExtra("USER_NAME")
-
-        val userId = intent.getStringExtra("USER_ID")
-
-        val btnSignOut = findViewById<ImageView>(R.id.btn_sair)
+        */
 
 
+        //handler.post(timeUpdater)
+
+        //val userEmail = intent.getStringExtra("USER_EMAIL")
+
+        //val userName = intent.getStringExtra("USER_NAME")
+
+        //val userId = intent.getStringExtra("USER_ID")
+
+        //val btnSignOut = findViewById<ImageView>(R.id.btn_sair)
+
+/*
         btnSignOut.setOnClickListener {
             auth.signOut()
 
@@ -70,10 +74,12 @@ class HomeActivity : AppCompatActivity() {
             finish()
         }
 
+ */
 
 
 
 
+/*
         val textVIewId = findViewById<TextView>(R.id.textViewMatricula)
         textVIewId.text = "Matrícula: $userId"
 
@@ -84,15 +90,10 @@ class HomeActivity : AppCompatActivity() {
         val currentTime: String = dateFormat.format(Date())
 
         textView.text = currentTime
+*/
 
-        initNavigation()
     }
 
-    private fun initNavigation () {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
-        NavigationUI.setupWithNavController(binding.btnv, navController)
-    }
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacks(timeUpdater)
