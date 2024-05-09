@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/bottom_registro"
+        android:id="@+id/homeFragment"
         android:title="REGISTRO"
+        android:icon="@drawable/ic_clock_bottom"
         />
     <item
-        android:id="@+id/bottom_relatorio"
+        android:id="@+id/relatorioFragment"
         android:title="RELATÓRIO"
+        android:icon="@drawable/ic_report_bottom"
         />
     <item
-        android:id="@+id/bottom_calendario"
+        android:id="@+id/calendarFragment"
         android:title="CALENDÁRIO"
+        android:icon="@drawable/ic_calendar_bottom"
         />
 
 </menu>

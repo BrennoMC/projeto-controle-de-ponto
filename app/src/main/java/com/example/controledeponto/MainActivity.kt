@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                 val user = auth.currentUser
                 Log.d(TAG, "$user")
 
-                val goToMenu = Intent(this@MainActivity, CalendarActivity::class.java)
+                val goToMenu = Intent(this@MainActivity, HomeActivity::class.java)
 
                 goToMenu.putExtra("USER_EMAIL", user?.email)
                 goToMenu.putExtra("USER_NAME", user?.displayName)
