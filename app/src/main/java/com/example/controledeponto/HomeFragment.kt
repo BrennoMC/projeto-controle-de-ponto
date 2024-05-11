@@ -33,6 +33,8 @@ import java.util.Date
 import java.util.Locale
 
 import android.content.Intent
+import android.widget.ImageView
+import java.util.Calendar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,8 +86,6 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        //binding.horarioText.text = LocalTime.now()
-        //binding.messageTextView.text = "FUNCIONOU"
 
         handler = Handler()
 
@@ -112,8 +112,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_home, container, false)
+
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -132,6 +131,117 @@ class HomeFragment : Fragment() {
         binding.txtName.text = userName
 
         punchTheClock()
+
+        val calendar = Calendar.getInstance()
+
+        val calendarBg = resources.getDrawable(R.drawable.calendar_border_white)
+
+        val days = listOf(
+            R.id.segunda_number,
+            R.id.terca_number,
+            R.id.quarta_number,
+            R.id.quinta_number,
+            R.id.sexta_number
+        )
+
+        val currentDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+        val todayIndex = if (dayOfWeek == Calendar.SUNDAY) 6 else dayOfWeek - 2
+        val maxDaysInCurrentMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+
+        when (dayOfWeek) {
+            Calendar.MONDAY -> R.id.calendars
+            Calendar.TUESDAY -> R.id.calendars2
+            Calendar.WEDNESDAY -> R.id.calendars3
+            Calendar.THURSDAY -> R.id.calendars4
+            Calendar.FRIDAY -> R.id.calendars5
+            else -> null
+        }?.let {
+            view.findViewById<TextView>(it).apply {
+                background = calendarBg
+            }
+        }
+
+        for ((index, textViewId) in days.withIndex()) {
+            if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+                var dayOfMonth = currentDayOfMonth + index + 2
+                if (dayOfMonth > maxDaysInCurrentMonth) {
+                    dayOfMonth -= maxDaysInCurrentMonth
+                    calendar.add(Calendar.MONTH, 1)
+                } else if (dayOfMonth < 1) {
+                    calendar.add(Calendar.MONTH, -1)
+                    dayOfMonth += calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+                }
+                view.findViewById<TextView>(textViewId).text = dayOfMonth.toString()
+            } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+                var dayOfMonth = currentDayOfMonth + index + 1
+                if (dayOfMonth > maxDaysInCurrentMonth) {
+                    dayOfMonth -= maxDaysInCurrentMonth
+                    calendar.add(Calendar.MONTH, 1)
+                } else if (dayOfMonth < 1) {
+                    calendar.add(Calendar.MONTH, -1)
+                    dayOfMonth += calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+                }
+                view.findViewById<TextView>(textViewId).text = dayOfMonth.toString()
+            } else {
+                var dayOfMonth = currentDayOfMonth - (todayIndex - index)
+                if (dayOfMonth > maxDaysInCurrentMonth) {
+                    dayOfMonth -= maxDaysInCurrentMonth
+                    calendar.add(Calendar.MONTH, 1)
+                }
+                view.findViewById<TextView>(textViewId).text = dayOfMonth.toString()
+            }
+
+        }
+
+
+        when(calendar.get(Calendar.DAY_OF_WEEK)) {
+            Calendar.MONDAY -> {
+                view.findViewById<TextView>(R.id.segunda_text).apply {
+                    setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                }
+                view.findViewById<TextView>(R.id.segunda_number).apply {
+                    setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                }
+            }
+
+            Calendar.TUESDAY -> {
+                view.findViewById<TextView>(R.id.terca_text).apply {
+                    setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                }
+                view.findViewById<TextView>(R.id.terca_number).apply {
+                    setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                }
+            }
+
+            Calendar.WEDNESDAY -> {
+                view.findViewById<TextView>(R.id.quarta_text).apply {
+                    setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                }
+                view.findViewById<TextView>(R.id.quarta_number).apply {
+                    setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                }
+            }
+
+            Calendar.THURSDAY -> {
+                view.findViewById<TextView>(R.id.quinta_text).apply {
+                    setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                }
+                view.findViewById<TextView>(R.id.quinta_number).apply {
+                    setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                }
+
+            }
+
+            Calendar.FRIDAY -> {
+                view.findViewById<TextView>(R.id.sexta_text).apply {
+                    setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                }
+                view.findViewById<TextView>(R.id.sexta_number).apply {
+                    setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                }
+            }
+        }
 
     }
 

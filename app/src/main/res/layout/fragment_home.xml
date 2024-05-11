@@ -125,6 +125,23 @@
             app:layout_constraintEnd_toEndOf="@+id/calendars"
             app:layout_constraintStart_toStartOf="@+id/calendars"
             app:layout_constraintTop_toTopOf="@+id/calendars"
+            app:layout_constraintVertical_bias=".8"
+            app:layout_constraintHorizontal_bias="0.5"
+            />
+        <TextView
+            android:id="@+id/segunda_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:translationZ="90dp"
+            app:layout_constraintBottom_toBottomOf="@+id/calendars"
+            app:layout_constraintEnd_toEndOf="@+id/calendars"
+            app:layout_constraintStart_toStartOf="@+id/calendars"
+            app:layout_constraintTop_toTopOf="@+id/calendars"
+            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.5"
             />
 
         <TextView
@@ -153,7 +170,25 @@
             app:layout_constraintBottom_toBottomOf="@+id/calendars2"
             app:layout_constraintEnd_toEndOf="@+id/calendars2"
             app:layout_constraintStart_toStartOf="@+id/calendars2"
-            app:layout_constraintTop_toTopOf="@+id/calendars2" />
+            app:layout_constraintTop_toTopOf="@+id/calendars2"
+            app:layout_constraintVertical_bias="0.8"
+            app:layout_constraintHorizontal_bias="0.5"
+            />
+        <TextView
+            android:id="@+id/terca_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:translationZ="90dp"
+            app:layout_constraintBottom_toBottomOf="@+id/calendars2"
+            app:layout_constraintEnd_toEndOf="@+id/calendars2"
+            app:layout_constraintStart_toStartOf="@+id/calendars2"
+            app:layout_constraintTop_toTopOf="@+id/calendars2"
+            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.5"
+            />
 
         <TextView
             android:id="@+id/calendars3"
@@ -182,7 +217,26 @@
             app:layout_constraintBottom_toBottomOf="@+id/calendars3"
             app:layout_constraintEnd_toEndOf="@+id/calendars3"
             app:layout_constraintStart_toStartOf="@+id/calendars3"
-            app:layout_constraintTop_toTopOf="@+id/calendars3" />
+            app:layout_constraintTop_toTopOf="@+id/calendars3"
+            app:layout_constraintVertical_bias="0.8"
+            app:layout_constraintHorizontal_bias="0.5"
+            />
+
+        <TextView
+            android:id="@+id/quarta_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:translationZ="90dp"
+            app:layout_constraintBottom_toBottomOf="@+id/calendars3"
+            app:layout_constraintEnd_toEndOf="@+id/calendars3"
+            app:layout_constraintStart_toStartOf="@+id/calendars3"
+            app:layout_constraintTop_toTopOf="@+id/calendars3"
+            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.5"
+            />
 
         <TextView
             android:id="@+id/calendars4"
@@ -198,6 +252,22 @@
             app:layout_constraintVertical_bias="0.865" />
 
         <TextView
+            android:id="@+id/quinta_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:translationZ="90dp"
+            app:layout_constraintBottom_toBottomOf="@+id/calendars4"
+            app:layout_constraintEnd_toEndOf="@+id/calendars4"
+            app:layout_constraintStart_toStartOf="@+id/calendars4"
+            app:layout_constraintTop_toTopOf="@+id/calendars4"
+            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.5"
+            />
+
+        <TextView
             android:id="@+id/quinta_text"
             android:layout_width="29dp"
             android:layout_height="31dp"
@@ -211,6 +281,8 @@
             app:layout_constraintEnd_toEndOf="@+id/calendars4"
             app:layout_constraintStart_toStartOf="@+id/calendars4"
             app:layout_constraintTop_toTopOf="@+id/calendars4"
+            app:layout_constraintVertical_bias="0.8"
+            app:layout_constraintHorizontal_bias="0.5"
             />
 
         <TextView
@@ -241,7 +313,26 @@
             app:layout_constraintBottom_toBottomOf="@+id/calendars5"
             app:layout_constraintEnd_toEndOf="@+id/calendars5"
             app:layout_constraintStart_toStartOf="@+id/calendars5"
-            app:layout_constraintTop_toTopOf="@+id/calendars5" />
+            app:layout_constraintTop_toTopOf="@+id/calendars5"
+            app:layout_constraintVertical_bias="0.8"
+            app:layout_constraintHorizontal_bias="0.5"
+            />
+
+        <TextView
+            android:id="@+id/sexta_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:translationZ="90dp"
+            app:layout_constraintBottom_toBottomOf="@+id/calendars5"
+            app:layout_constraintEnd_toEndOf="@+id/calendars5"
+            app:layout_constraintStart_toStartOf="@+id/calendars5"
+            app:layout_constraintTop_toTopOf="@+id/calendars5"
+            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.5"
+            />
 
         <TextView
             android:id="@+id/txtName"
