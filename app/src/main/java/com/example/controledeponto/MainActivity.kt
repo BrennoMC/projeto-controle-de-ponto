@@ -27,6 +27,12 @@ class MainActivity : AppCompatActivity() {
 
         val btnForgotPassword = findViewById<TextView>(R.id.txtForgotPassword)
 
+        /*btnLogin.setOnClickListener {
+            val goToMenu = Intent(this@MainActivity, HomeActivity::class.java)
+
+            startActivity(goToMenu)
+        }*/
+
         btnLogin.setOnClickListener {
             val email = findViewById<EditText>(R.id.loginEmail).text.toString()
             val password = findViewById<EditText>(R.id.loginPassword).text.toString()
@@ -78,6 +84,18 @@ class MainActivity : AppCompatActivity() {
                 goToMenu.putExtra("USER_EMAIL", user?.email)
                 goToMenu.putExtra("USER_NAME", user?.displayName)
                 goToMenu.putExtra("USER_ID",user?.uid)
+
+                /*val bundle = Bundle()
+                bundle.putString("USER_EMAIL", user?.email)
+                bundle.putString("USER_NAME", user?.displayName)
+                bundle.putString("USER_ID", user?.uid)
+
+                val meuFragment = HomeFragment()
+                meuFragment.arguments = bundle
+
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment, meuFragment)
+                    .commit()*/
 
                 startActivity(goToMenu)
 

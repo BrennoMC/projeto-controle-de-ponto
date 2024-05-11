@@ -26,7 +26,7 @@
     <fragment
         android:id="@+id/fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="809dp"
         app:defaultNavHost="true"
         app:navGraph="@navigation/main_graph"
