@@ -37,6 +37,8 @@ class HomeActivity : AppCompatActivity() {
 
 
 
+
+
         //auth = Firebase.auth
 
         //textView = findViewById<TextView>(R.id.horario_text)
@@ -69,12 +71,16 @@ class HomeActivity : AppCompatActivity() {
         bundle.putString("USER_NAME", userName)
         bundle.putString("USER_ID", userId)
 
+        /*
         val meuFragment = HomeFragment()
         meuFragment.arguments = bundle
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment, meuFragment)
             .commit()
+
+            */
+
 
         //val btnSignOut = findViewById<ImageView>(R.id.btn_sair)
 
