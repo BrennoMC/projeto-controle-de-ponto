@@ -11,13 +11,13 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/calendarFragment"
-        android:name="com.example.controledeponto.CalendarFragment"
-        android:label="fragment_calendar"
-        tools:layout="@layout/fragment_calendar" />
-    <fragment
         android:id="@+id/relatorioFragment"
         android:name="com.example.controledeponto.RelatorioFragment"
         android:label="fragment_relatorio"
         tools:layout="@layout/fragment_relatorio" />
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.example.controledeponto.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" />
 </navigation>

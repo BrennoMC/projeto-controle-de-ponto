@@ -35,6 +35,10 @@ class HomeActivity : AppCompatActivity() {
         val navController = findNavController(R.id.fragment)
         bottomNavigationView.setupWithNavController(navController)
 
+
+
+
+
         //auth = Firebase.auth
 
         //textView = findViewById<TextView>(R.id.horario_text)
@@ -56,11 +60,27 @@ class HomeActivity : AppCompatActivity() {
 
         //handler.post(timeUpdater)
 
-        //val userEmail = intent.getStringExtra("USER_EMAIL")
+        val userEmail = intent.getStringExtra("USER_EMAIL")
 
-        //val userName = intent.getStringExtra("USER_NAME")
+        val userName = intent.getStringExtra("USER_NAME")
 
-        //val userId = intent.getStringExtra("USER_ID")
+        val userId = intent.getStringExtra("USER_ID")
+
+        val bundle = Bundle()
+        bundle.putString("USER_EMAIL", userEmail)
+        bundle.putString("USER_NAME", userName)
+        bundle.putString("USER_ID", userId)
+
+        /*
+        val meuFragment = HomeFragment()
+        meuFragment.arguments = bundle
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, meuFragment)
+            .commit()
+
+            */
+
 
         //val btnSignOut = findViewById<ImageView>(R.id.btn_sair)
 
