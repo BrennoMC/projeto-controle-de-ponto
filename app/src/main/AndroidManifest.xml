@@ -15,6 +15,9 @@
         android:theme="@style/Theme.ControleDePonto"
         tools:targetApi="31">
         <activity
+            android:name=".pointAdapter"
+            android:exported="false" />
+        <activity
             android:name=".ForgotPasswordActivity"
             android:exported="false" />
         <activity
@@ -22,10 +25,11 @@
             android:exported="false" />
         <activity
             android:name=".SplashActivity"
-            android:screenOrientation="portrait"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -34,7 +38,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".HomeActivity"
             android:exported="false" />
