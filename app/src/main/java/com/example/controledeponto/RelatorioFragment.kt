@@ -11,6 +11,7 @@ import java.util.Calendar
 import com.example.controledeponto.databinding.FragmentRelatorioBinding
 import java.util.*
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,8 @@ import com.google.firebase.database.*
 import java.text.SimpleDateFormat
 import java.util.Date
 import kotlin.time.ExperimentalTime
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,6 +61,7 @@ data class Point(
 )
 
 class RelatorioFragment : Fragment() {
+    private lateinit var auth: FirebaseAuth
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PointAdapter
 
@@ -91,6 +95,14 @@ class RelatorioFragment : Fragment() {
 
         binding.button.setOnClickListener {
             searchReports(binding)
+        }
+
+        auth = Firebase.auth
+        binding.btnSair.setOnClickListener{
+            auth.signOut()
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
         }
     }
 
