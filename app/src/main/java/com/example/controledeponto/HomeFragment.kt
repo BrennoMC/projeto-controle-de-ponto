@@ -1,6 +1,12 @@
 package com.example.controledeponto
 
 import android.Manifest
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
 import android.location.Location
@@ -33,8 +39,15 @@ import java.util.Date
 import java.util.Locale
 
 import android.content.Intent
+import android.os.Build
 import android.widget.ImageView
+import androidx.core.app.NotificationCompat
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.Query
+import com.google.firebase.database.ValueEventListener
 import java.util.Calendar
+import java.util.Random
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,6 +59,14 @@ private const val ARG_PARAM2 = "param2"
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+data class Horarios (
+    val horaInicio: String? = null,
+    val horaFim: String? = null,
+    val dia: String? = null,
+    val userId: String? = null
+)
+
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -120,11 +141,11 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val userEmail = arguments?.getString("USER_EMAIL")
+        val userEmail = auth.currentUser?.email
 
-        val userName = arguments?.getString("USER_NAME")
+        val userName = auth.currentUser?.displayName
 
-        val userId = arguments?.getString("USER_ID")
+        val userId = auth.currentUser?.uid
 
         Log.e("USER_DADOS", "USER: $userId, EMAIL: $userEmail, NOME: $userName")
 
@@ -243,6 +264,65 @@ class HomeFragment : Fragment() {
             }
         }
 
+        // Obtém a referência do nó de horários no banco de dados
+        val databaseReference = FirebaseDatabase.getInstance()
+
+        val horariosRef = databaseReference.getReference("horarios")
+
+        val query: Query = horariosRef.orderByChild("userId").equalTo(userId)
+
+        Log.d("HORARIOS", "$query")
+
+        // Adiciona um ouvinte de valor para a referência do nó de horários
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                // Limpa todas as notificações agendadas
+                //clearNotifications()
+
+                Log.d("HORARIOS", "$snapshot")
+
+                // Obtém o dia da semana atual
+                val calendar = Calendar.getInstance()
+                val diaDaSemanaAtual = when (calendar.get(Calendar.DAY_OF_WEEK)) {
+                    Calendar.SUNDAY -> "domingo"
+                    Calendar.MONDAY -> "seg"
+                    Calendar.TUESDAY -> "ter"
+                    Calendar.WEDNESDAY -> "qua"
+                    Calendar.THURSDAY -> "qui"
+                    Calendar.FRIDAY -> "sex"
+                    Calendar.SATURDAY -> "sab"
+                    else -> ""
+                }
+
+                Log.d("HORARIOS", "Dia da semana: $diaDaSemanaAtual")
+
+                val timeNotification = mutableListOf<Horarios>()
+
+                // Itera sobre os horários do usuário
+                for (child in snapshot.children) {
+                    val horario = child.getValue(Horarios::class.java)
+
+                    /*if(horario?.dia == "seg") {
+                        Log.d("HORARIOS", "Dia: ${horario?.dia}, Inicio: ${horario?.horaInicio}")
+                    }*/
+
+                    if(horario?.dia == diaDaSemanaAtual) {
+
+                        timeNotification.add(horario)
+
+                        horario?.horaInicio?.let { scheduleNotification(it) }
+                    }
+
+                }
+                Log.d("HORARIOS", "Lista: $timeNotification")
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Tratamento de erro
+            }
+        })
+
     }
 
     private fun punchTheClock() {
@@ -316,8 +396,84 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // Função para agendar uma notificação para um horário específico
+    private fun scheduleNotification(horario: String) {
+        val dateFormat = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+        val calendar = Calendar.getInstance()
+        val horarioDate = dateFormat.parse("${calendar.get(Calendar.YEAR)}-${calendar.get(Calendar.MONTH) + 1}-${calendar.get(Calendar.DAY_OF_MONTH)} $horario:00")
+
+        Log.d("HORARIOS", "Notificação criada | ${horarioDate}")
+        Log.d("HORARIOS", "Notificação criada | ${horarioDate.time}")
+
+        horarioDate?.let {
+            val intent = Intent(requireContext(), NotificationPublisher::class.java)
+            // Passa a data completa do dia para o Intent como um extra
+            intent.putExtra("calendar", horarioDate.time)
+            val pendingIntent = PendingIntent.getBroadcast(requireContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+            alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP,
+                horarioDate.time,
+                AlarmManager.INTERVAL_DAY,
+                pendingIntent
+            )
+        }
+    }
+
+
     private fun isLocationInsidePolygon(location: Location): Boolean {
         val point = LatLng(location.latitude, location.longitude)
         return PolyUtil.containsLocation(point, polygonPoints, true)
+    }
+}
+
+class NotificationPublisher : BroadcastReceiver() {
+
+    override fun onReceive(context: Context, intent: Intent) {
+        // Obtém a data completa do dia do extra do Intent
+        val timeInMillis = intent.getLongExtra("calendar", 0)
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = timeInMillis
+        val diaDaSemana = when (calendar.get(Calendar.DAY_OF_WEEK)) {
+            Calendar.SUNDAY -> "domingo"
+            Calendar.MONDAY -> "segunda-feira"
+            Calendar.TUESDAY -> "terça-feira"
+            Calendar.WEDNESDAY -> "quarta-feira"
+            Calendar.THURSDAY -> "quinta-feira"
+            Calendar.FRIDAY -> "sexta-feira"
+            Calendar.SATURDAY -> "sábado"
+            else -> ""
+        }
+
+        Log.d("HORARIOS", "NOTIFICATION PUBLISHER")
+
+        // Cria um Intent para abrir a MainActivity quando a notificação for clicada
+        val intent = Intent(context, HomeFragment::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        val pendingIntent = PendingIntent.getActivity(context, 0, intent,
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
+
+        // Cria e envia a notificação
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val channelId = "channel-id"
+        val channelName = "Channel Name"
+        val importance = NotificationManager.IMPORTANCE_HIGH
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(channelId, channelName, importance)
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
+
+        val notificationBuilder = NotificationCompat.Builder(context, channelId)
+            .setSmallIcon(R.drawable.logo)
+            .setContentTitle("Horário de entrada")
+            .setContentText("É hora de entrar! Você tem uma aula as $ Dia da semana: $diaDaSemana")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
+        val notificationId = Random().nextInt(1000)
+
+        notificationManager.notify(notificationId, notificationBuilder.build())
     }
 }
