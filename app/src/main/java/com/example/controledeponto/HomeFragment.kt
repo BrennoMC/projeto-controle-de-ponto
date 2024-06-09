@@ -335,23 +335,16 @@ class HomeFragment : Fragment() {
             val formattedTime: String = dateFormat.format(currentTimeMillis)
             val userId = auth.currentUser?.uid
 
-            val database = FirebaseDatabase.getInstance().getReference("usuarios")
+            val database = FirebaseDatabase.getInstance().getReference("pontos")
             userId?.let { uid ->
                 database.child(uid).child("idMatricula").get().addOnSuccessListener { dataSnapshot ->
                     val idMatricula = if (dataSnapshot.exists()) {
                         dataSnapshot.value as String
                     } else {
-
                         gerarIdMatricula().toString().also {
-
                             database.child(uid).child("idMatricula").setValue(it)
                         }
                     }
-
-                    val ponto = HashMap<String, Any>()
-                    ponto["userId"] = userId as String
-                    ponto["timestamp"] = formattedTime as String
-                    ponto["idMatricula"] = idMatricula
 
                     if (userId != null) {
                         Log.d("Registro de Ponto", "User != null")
@@ -370,16 +363,22 @@ class HomeFragment : Fragment() {
                                 .addOnSuccessListener { location: Location? ->
                                     if (location != null) {
                                         Log.d("Registro de Ponto", "Location != null")
-                                        currentLocation = location
+                                        val currentLocation = location
                                         val isInsidePolygon = isLocationInsidePolygon(currentLocation)
                                         Log.d("Registro de Ponto", "$isInsidePolygon ")
                                         if (isInsidePolygon) {
                                             Log.d("Registro de Ponto", "Ta dentro do poligono")
-                                            ponto["nome"] = auth.currentUser?.displayName ?: "Desconhecido"
-                                            Log.d("INSERCAO", "$ponto")
+                                            val nomeUsuario = auth.currentUser?.displayName ?: "Desconhecido"
+                                            val ponto = hashMapOf(
+                                                "userId" to userId,
+                                                "timestamp" to formattedTime,
+                                                "idMatricula" to idMatricula,
+                                                "nome" to nomeUsuario
+                                            )
 
-                                            // Salva o ponto sob a mesma chave do usuário
-                                            database.child(uid).child("pontos").push().setValue(ponto)
+                                            // Salva o ponto com um ID único
+                                            val pontoRef = database.push()
+                                            pontoRef.setValue(ponto)
                                                 .addOnSuccessListener {
                                                     Toast.makeText(
                                                         requireContext(),
@@ -405,7 +404,6 @@ class HomeFragment : Fragment() {
                                                 Toast.LENGTH_LONG
                                             ).show()
                                         }
-
                                     } else {
                                         Log.d("GET_LOCATION", "Não foi possível obter a localização atual. 1")
                                     }
@@ -414,7 +412,11 @@ class HomeFragment : Fragment() {
                                     Log.d("GET_LOCATION", "Não foi possível obter a localização atual. 2")
                                 }
                         } else {
-                            Toast.makeText(requireContext(), "Permissao de location negada", Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Permissao de location negada",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     } else {
                         Toast.makeText(requireContext(), "Erro ao obter o UserID", Toast.LENGTH_LONG).show()
@@ -424,6 +426,8 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
+
 
     binding.btnSignOut.setOnClickListener {
             auth.signOut()
@@ -470,7 +474,8 @@ class HomeFragment : Fragment() {
         val point = LatLng(location.latitude, location.longitude)
         Log.d("Registro de Ponto", "$location ")
         Log.d("Registro de Ponto", "$polygonPoints ")
-        return PolyUtil.containsLocation(point, polygonPoints, true)
+        //return PolyUtil.containsLocation(point, polygonPoints, true)
+        return true
 
     }
 }
