@@ -83,7 +83,6 @@ class HomeFragment : Fragment() {
         LatLng(-22.836012669833377, -47.04416036101791),
         LatLng(-22.83634805986867, -47.05268883988106),
     )
-
     private lateinit var handler: Handler
     private lateinit var timeUpdater: Runnable
 
@@ -326,67 +325,107 @@ class HomeFragment : Fragment() {
     }
 
     private fun punchTheClock() {
-
         val auth = FirebaseAuth.getInstance()
         val firebaseDatabase = FirebaseDatabase.getInstance()
+        Log.d("Registro de Ponto", "Iniciando processo de registro do ponto...")
 
-
-        binding.registrarPonto.setOnClickListener { //task ->
-
+        binding.registrarPonto.setOnClickListener {
             val currentTimeMillis = System.currentTimeMillis()
             val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
             val formattedTime: String = dateFormat.format(currentTimeMillis)
             val userId = auth.currentUser?.uid
 
-            val databaseReference = database.child("pontos").push().key
+            val database = FirebaseDatabase.getInstance().getReference("usuarios")
+            userId?.let { uid ->
+                database.child(uid).child("idMatricula").get().addOnSuccessListener { dataSnapshot ->
+                    val idMatricula = if (dataSnapshot.exists()) {
+                        dataSnapshot.value as String
+                    } else {
 
-            val ponto = HashMap<String, Any>()
-            ponto["userId"] = userId as String
-            ponto["timestamp"] = formattedTime as String
+                        gerarIdMatricula().toString().also {
 
-            if (databaseReference != null){
-                if ( userId != null) {
-                    if (ActivityCompat.checkSelfPermission(requireContext(),
-                            Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(),
-                            Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                    ) {
-                        fusedLocationClient.getCurrentLocation(LocationRequest.QUALITY_HIGH_ACCURACY, null)
-                            .addOnSuccessListener { location: Location? ->
-                                if (location != null) {
-                                    currentLocation = location
-                                    val isInsidePolygon = isLocationInsidePolygon(currentLocation)
-
-                                    if (isInsidePolygon) {
-                                        database.child("pontos").child(databaseReference).setValue(ponto).addOnSuccessListener {
-                                            Toast.makeText(requireContext(), "Ponto registrado em: $formattedTime", Toast.LENGTH_SHORT).show()
-                                        }.addOnFailureListener {exception ->
-                                            Toast.makeText(requireContext(), "Falha ao registrar ponto.", Toast.LENGTH_SHORT).show()
-                                            Log.e("Registro de Ponto", "Falha ao registrar ponto.", exception)
-                                        }
-                                    } else {
-                                        Toast.makeText(requireContext(), "Você não está dentro da área permitida para registar o ponto", Toast.LENGTH_LONG).show()
-                                    }
-
-                                } else {
-                                    //binding.messageTextView.text = "Não foi possível obter a localização atual. 1"
-                                    Log.d("GET_LOCATION", "Não foi possível obter a localização atual. 1")
-                                    //Toast.makeText(requireContext(), "Não foi possível obter a localização atual. 1", Toast.LENGTH_LONG).show()
-                                }
-                            }
-                            .addOnFailureListener {
-                                //binding.messageTextView.text = "Não foi possível obter a localização atual. 2"
-                                Log.d("GET_LOCATION", "Não foi possível obter a localização atual. 2")
-                                //Toast.makeText(requireContext(), "Não foi possível obter a localização atual. 2", Toast.LENGTH_LONG).show()
-
-                            }
+                            database.child(uid).child("idMatricula").setValue(it)
+                        }
                     }
-                } else {
-                    Toast.makeText(requireContext(), "Erro ao obter o UserID", Toast.LENGTH_LONG).show()
+
+                    val ponto = HashMap<String, Any>()
+                    ponto["userId"] = userId as String
+                    ponto["timestamp"] = formattedTime as String
+                    ponto["idMatricula"] = idMatricula
+
+                    if (userId != null) {
+                        Log.d("Registro de Ponto", "User != null")
+                        if (ActivityCompat.checkSelfPermission(
+                                requireContext(),
+                                Manifest.permission.ACCESS_FINE_LOCATION
+                            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                                requireContext(),
+                                Manifest.permission.ACCESS_COARSE_LOCATION
+                            ) == PackageManager.PERMISSION_GRANTED
+                        ) {
+                            fusedLocationClient.getCurrentLocation(
+                                LocationRequest.QUALITY_HIGH_ACCURACY,
+                                null
+                            )
+                                .addOnSuccessListener { location: Location? ->
+                                    if (location != null) {
+                                        Log.d("Registro de Ponto", "Location != null")
+                                        currentLocation = location
+                                        val isInsidePolygon = isLocationInsidePolygon(currentLocation)
+                                        Log.d("Registro de Ponto", "$isInsidePolygon ")
+                                        if (isInsidePolygon) {
+                                            Log.d("Registro de Ponto", "Ta dentro do poligono")
+                                            ponto["nome"] = auth.currentUser?.displayName ?: "Desconhecido"
+                                            Log.d("INSERCAO", "$ponto")
+
+                                            // Salva o ponto sob a mesma chave do usuário
+                                            database.child(uid).child("pontos").push().setValue(ponto)
+                                                .addOnSuccessListener {
+                                                    Toast.makeText(
+                                                        requireContext(),
+                                                        "Ponto registrado em: $formattedTime",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                }.addOnFailureListener { exception ->
+                                                    Toast.makeText(
+                                                        requireContext(),
+                                                        "Falha ao registrar ponto.",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                    Log.e(
+                                                        "Registro de Ponto",
+                                                        "Falha ao registrar ponto.",
+                                                        exception
+                                                    )
+                                                }
+                                        } else {
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "Você não está dentro da área permitida para registar o ponto",
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                        }
+
+                                    } else {
+                                        Log.d("GET_LOCATION", "Não foi possível obter a localização atual. 1")
+                                    }
+                                }
+                                .addOnFailureListener {
+                                    Log.d("GET_LOCATION", "Não foi possível obter a localização atual. 2")
+                                }
+                        } else {
+                            Toast.makeText(requireContext(), "Permissao de location negada", Toast.LENGTH_LONG).show()
+                        }
+                    } else {
+                        Toast.makeText(requireContext(), "Erro ao obter o UserID", Toast.LENGTH_LONG).show()
+                    }
+                }.addOnFailureListener { exception ->
+                    Log.e("Firebase", "Erro ao obter idMatricula do usuário", exception)
                 }
             }
         }
 
-        binding.btnSignOut.setOnClickListener {
+    binding.btnSignOut.setOnClickListener {
             auth.signOut()
 
             val intent = Intent(requireContext(), MainActivity::class.java)
@@ -394,6 +433,10 @@ class HomeFragment : Fragment() {
             startActivity(intent)
             //onDestroy()
         }
+    }
+
+    private fun gerarIdMatricula(): Int {
+        return (100000..999999).random()
     }
 
     // Função para agendar uma notificação para um horário específico
@@ -423,8 +466,12 @@ class HomeFragment : Fragment() {
 
 
     private fun isLocationInsidePolygon(location: Location): Boolean {
+        Log.d("Registro de Ponto", "isLocationInsidePolygon ")
         val point = LatLng(location.latitude, location.longitude)
+        Log.d("Registro de Ponto", "$location ")
+        Log.d("Registro de Ponto", "$polygonPoints ")
         return PolyUtil.containsLocation(point, polygonPoints, true)
+
     }
 }
 
