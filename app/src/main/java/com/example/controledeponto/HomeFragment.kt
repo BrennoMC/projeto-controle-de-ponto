@@ -474,8 +474,8 @@ class HomeFragment : Fragment() {
         val point = LatLng(location.latitude, location.longitude)
         Log.d("Registro de Ponto", "$location ")
         Log.d("Registro de Ponto", "$polygonPoints ")
-        //return PolyUtil.containsLocation(point, polygonPoints, true)
-        return true
+        return PolyUtil.containsLocation(point, polygonPoints, true)
+        //return true
 
     }
 }
