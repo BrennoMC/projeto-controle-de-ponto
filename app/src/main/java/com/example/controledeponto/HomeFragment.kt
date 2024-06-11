@@ -335,14 +335,16 @@ class HomeFragment : Fragment() {
             val formattedTime: String = dateFormat.format(currentTimeMillis)
             val userId = auth.currentUser?.uid
 
-            val database = FirebaseDatabase.getInstance().getReference("pontos")
+            val pontosRef = firebaseDatabase.getReference("pontos")
+            val usersRef = firebaseDatabase.getReference("users")
+
             userId?.let { uid ->
-                database.child(uid).child("idMatricula").get().addOnSuccessListener { dataSnapshot ->
+                usersRef.child(uid).child("idMatricula").get().addOnSuccessListener { dataSnapshot ->
                     val idMatricula = if (dataSnapshot.exists()) {
                         dataSnapshot.value as String
                     } else {
                         gerarIdMatricula().toString().also {
-                            database.child(uid).child("idMatricula").setValue(it)
+                            usersRef.child(uid).child("idMatricula").setValue(it)
                         }
                     }
 
@@ -377,7 +379,7 @@ class HomeFragment : Fragment() {
                                             )
 
                                             // Salva o ponto com um ID único
-                                            val pontoRef = database.push()
+                                            val pontoRef = pontosRef.push()
                                             pontoRef.setValue(ponto)
                                                 .addOnSuccessListener {
                                                     Toast.makeText(
@@ -427,9 +429,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-
-
-    binding.btnSignOut.setOnClickListener {
+        binding.btnSignOut.setOnClickListener {
             auth.signOut()
 
             val intent = Intent(requireContext(), MainActivity::class.java)
@@ -438,6 +438,7 @@ class HomeFragment : Fragment() {
             //onDestroy()
         }
     }
+
 
     private fun gerarIdMatricula(): Int {
         return (100000..999999).random()
