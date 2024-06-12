@@ -2,7 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="app">
+      <entry key="Unnamed">
         <State>
           <targetSelectedWithDropDown>
             <Target>
@@ -10,12 +10,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\breno\.android\avd\Pixel_6_API_33_1.avd" />
+                  <value value="$USER_HOME$/.android/avd/Pixel_5_API_33.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-05-12T13:16:24.168465100Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-06-11T02:16:32.348515Z" />
         </State>
       </entry>
     </value>

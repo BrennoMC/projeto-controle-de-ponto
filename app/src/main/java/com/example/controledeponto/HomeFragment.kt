@@ -40,7 +40,9 @@ import java.util.Locale
 
 import android.content.Intent
 import android.os.Build
+import android.provider.Settings
 import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -263,6 +265,9 @@ class HomeFragment : Fragment() {
             }
         }
 
+        checkPermissions()
+        checkExactAlarmPermission()
+
         // Obtém a referência do nó de horários no banco de dados
         val databaseReference = FirebaseDatabase.getInstance()
 
@@ -283,7 +288,7 @@ class HomeFragment : Fragment() {
                 // Obtém o dia da semana atual
                 val calendar = Calendar.getInstance()
                 val diaDaSemanaAtual = when (calendar.get(Calendar.DAY_OF_WEEK)) {
-                    Calendar.SUNDAY -> "domingo"
+                    Calendar.SUNDAY -> "dom"
                     Calendar.MONDAY -> "seg"
                     Calendar.TUESDAY -> "ter"
                     Calendar.WEDNESDAY -> "qua"
@@ -293,26 +298,28 @@ class HomeFragment : Fragment() {
                     else -> ""
                 }
 
-                Log.d("HORARIOS", "Dia da semana: $diaDaSemanaAtual")
-
                 val timeNotification = mutableListOf<Horarios>()
 
                 // Itera sobre os horários do usuário
                 for (child in snapshot.children) {
                     val horario = child.getValue(Horarios::class.java)
 
-                    /*if(horario?.dia == "seg") {
-                        Log.d("HORARIOS", "Dia: ${horario?.dia}, Inicio: ${horario?.horaInicio}")
-                    }*/
-
                     if(horario?.dia == diaDaSemanaAtual) {
 
                         timeNotification.add(horario)
 
-                        horario?.horaInicio?.let { scheduleNotification(it) }
+                        //horario?.horaInicio?.let { scheduleNotification(it) }
                     }
 
                 }
+
+                // Para cada horário na lista, você pode obter o índice e chamar a função scheduleNotification
+                timeNotification.forEachIndexed { index, horario ->
+                    // Chame a função scheduleNotification passando o horário e o índice
+                    horario.horaInicio?.let { scheduleNotification(it, index) }
+                    horario.horaFim?.let { scheduleNotificationFim(it, (index + 10)) }
+                }
+
                 Log.d("HORARIOS", "Lista: $timeNotification")
 
             }
@@ -444,28 +451,128 @@ class HomeFragment : Fragment() {
         return (100000..999999).random()
     }
 
+    private fun checkExactAlarmPermission() {
+        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        if (!alarmManager.canScheduleExactAlarms()) {
+            AlertDialog.Builder(requireContext())
+                .setTitle("Permissão necessária")
+                .setMessage("Este aplicativo precisa de permissão para agendar alarmes exatos. Por favor, habilite nas configurações.")
+                .setPositiveButton("Configurações") { _, _ ->
+                    val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                    startActivity(intent)
+                }
+                .setNegativeButton("Cancelar", null)
+                .show()
+        }
+    }
+
     // Função para agendar uma notificação para um horário específico
-    private fun scheduleNotification(horario: String) {
-        val dateFormat = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
-        val calendar = Calendar.getInstance()
-        val horarioDate = dateFormat.parse("${calendar.get(Calendar.YEAR)}-${calendar.get(Calendar.MONTH) + 1}-${calendar.get(Calendar.DAY_OF_MONTH)} $horario:00")
+    private fun scheduleNotification(horario: String, index: Int) {
+        val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val currentCalendar = Calendar.getInstance()
 
-        Log.d("HORARIOS", "Notificação criada | ${horarioDate}")
-        Log.d("HORARIOS", "Notificação criada | ${horarioDate.time}")
+        val horarioDate = dateFormat.parse(horario)
 
-        horarioDate?.let {
-            val intent = Intent(requireContext(), NotificationPublisher::class.java)
-            // Passa a data completa do dia para o Intent como um extra
-            intent.putExtra("calendar", horarioDate.time)
-            val pendingIntent = PendingIntent.getBroadcast(requireContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-            val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        Log.d("NOTIFICATION", "horarioDate: $horarioDate | index: $index")
+        val targetCalendar = Calendar.getInstance().apply {
+            time = horarioDate
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+            set(Calendar.DAY_OF_MONTH, currentCalendar.get(Calendar.DAY_OF_MONTH))
+            set(Calendar.MONTH, currentCalendar.get(Calendar.MONTH))
+            set(Calendar.YEAR, currentCalendar.get(Calendar.YEAR))
+        }
 
-            alarmManager.setRepeating(
+        // Se o horário já tiver passado hoje, agenda para o mesmo horário no próximo dia
+        if (targetCalendar.before(currentCalendar)) {
+            targetCalendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+
+        val intent = Intent(requireContext(), NotificationPublisher::class.java).apply {
+            putExtra("calendar", targetCalendar.timeInMillis)
+            putExtra("title", "Hora da entrada")
+            putExtra("message", "Hora de registrar seu ponto de entrada")
+        }
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            requireContext(), index, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        try {
+            alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
-                horarioDate.time,
-                AlarmManager.INTERVAL_DAY,
+                targetCalendar.timeInMillis,
                 pendingIntent
             )
+            Log.d("NOTIFICATION", "Notificação agendada para: ${targetCalendar.time}")
+        } catch (e: SecurityException) {
+            Log.e("NOTIFICATION", "Não foi possível agendar a notificação: falta de permissão.", e)
+            Toast.makeText(requireContext(), "Não foi possível agendar a notificação: falta de permissão.", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun scheduleNotificationFim(horario: String, index: Int) {
+        val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val currentCalendar = Calendar.getInstance()
+
+        val horarioDate = dateFormat.parse(horario)
+
+        Log.d("NOTIFICATION", "horarioDate: $horarioDate | index: $index")
+        val targetCalendar = Calendar.getInstance().apply {
+            time = horarioDate
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+            set(Calendar.DAY_OF_MONTH, currentCalendar.get(Calendar.DAY_OF_MONTH))
+            set(Calendar.MONTH, currentCalendar.get(Calendar.MONTH))
+            set(Calendar.YEAR, currentCalendar.get(Calendar.YEAR))
+        }
+
+        // Se o horário já tiver passado hoje, agenda para o mesmo horário no próximo dia
+        if (targetCalendar.before(currentCalendar)) {
+            targetCalendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+
+        val intent = Intent(requireContext(), NotificationPublisher::class.java).apply {
+            putExtra("calendar", targetCalendar.timeInMillis)
+            putExtra("title", "Hora da saída")
+            putExtra("message", "Hora de registrar seu ponto de saída")
+        }
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            requireContext(), index, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        try {
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                targetCalendar.timeInMillis,
+                pendingIntent
+            )
+            Log.d("NOTIFICATION", "Notificação agendada para: ${targetCalendar.time}")
+        } catch (e: SecurityException) {
+            Log.e("NOTIFICATION", "Não foi possível agendar a notificação: falta de permissão.", e)
+            Toast.makeText(requireContext(), "Não foi possível agendar a notificação: falta de permissão.", Toast.LENGTH_LONG).show()
+        }
+    }
+
+
+    private fun checkPermissions() {
+        val requiredPermissions = mutableListOf<String>()
+
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requiredPermissions.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requiredPermissions.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            requiredPermissions.add(Manifest.permission.POST_NOTIFICATIONS)
+        }
+
+        if (requiredPermissions.isNotEmpty()) {
+            ActivityCompat.requestPermissions(requireActivity(), requiredPermissions.toTypedArray(), LOCATION_PERMISSION_REQUEST_CODE)
         }
     }
 
@@ -484,49 +591,42 @@ class HomeFragment : Fragment() {
 class NotificationPublisher : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        // Obtém a data completa do dia do extra do Intent
-        val timeInMillis = intent.getLongExtra("calendar", 0)
-        val calendar = Calendar.getInstance()
-        calendar.timeInMillis = timeInMillis
-        val diaDaSemana = when (calendar.get(Calendar.DAY_OF_WEEK)) {
-            Calendar.SUNDAY -> "domingo"
-            Calendar.MONDAY -> "segunda-feira"
-            Calendar.TUESDAY -> "terça-feira"
-            Calendar.WEDNESDAY -> "quarta-feira"
-            Calendar.THURSDAY -> "quinta-feira"
-            Calendar.FRIDAY -> "sexta-feira"
-            Calendar.SATURDAY -> "sábado"
-            else -> ""
-        }
-
-        Log.d("HORARIOS", "NOTIFICATION PUBLISHER")
-
-        // Cria um Intent para abrir a MainActivity quando a notificação for clicada
-        val intent = Intent(context, HomeFragment::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent,
-            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
-
-        // Cria e envia a notificação
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val channelId = "channel-id"
         val channelName = "Channel Name"
-        val importance = NotificationManager.IMPORTANCE_HIGH
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val importance = NotificationManager.IMPORTANCE_HIGH
             val notificationChannel = NotificationChannel(channelId, channelName, importance)
             notificationManager.createNotificationChannel(notificationChannel)
         }
 
+        val title = intent.getStringExtra("title")
+        val message = intent.getStringExtra("message")
+
+        // Intent para abrir a atividade principal
+        val resultIntent = Intent(context, HomeActivity::class.java)
+        resultIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+        // Define a ação da intent para navegar até a HomeFragment
+        resultIntent.action = "OPEN_HOME_FRAGMENT"
+
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            0,
+            resultIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
         val notificationBuilder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.logo)
-            .setContentTitle("Horário de entrada")
-            .setContentText("É hora de entrar! Você tem uma aula as $ Dia da semana: $diaDaSemana")
+            .setContentTitle(title)
+            .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(pendingIntent)
             .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
 
         val notificationId = Random().nextInt(1000)
-
         notificationManager.notify(notificationId, notificationBuilder.build())
     }
 }
