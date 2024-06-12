@@ -11,54 +11,53 @@
 
     <View
         android:id="@+id/header"
-        android:layout_width="672dp"
-        android:layout_height="51dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
         android:background="#1A1C3D"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.605"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/title"
-        android:layout_width="122dp"
-        android:layout_height="39dp"
+        android:id="@+id/logo"
+        android:layout_width="84dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="16dp"
         android:translationZ="50dp"
-        app:layout_constraintBottom_toBottomOf="@+id/header"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.686"
-        app:layout_constraintStart_toStartOf="@+id/header"
+        app:layout_constraintEnd_toEndOf="@+id/header"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/header"
+        app:srcCompat="@drawable/logo" />
+
+    <ImageView
+        android:id="@+id/title"
+        android:layout_width="84dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="16dp"
+        android:translationZ="50dp"
+        app:layout_constraintEnd_toEndOf="@+id/header"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/header"
         app:srcCompat="@drawable/ctrldeponto" />
 
     <ImageView
-        android:id="@+id/btn_sair"
-        android:layout_width="29dp"
-        android:layout_height="39dp"
-        android:cropToPadding="false"
+        android:id="@+id/btnSignOut"
+        android:layout_width="84dp"
+        android:layout_height="44dp"
         android:translationZ="50dp"
         app:layout_constraintBottom_toBottomOf="@+id/header"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.655"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/title"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/btn_sair" />
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="46dp"
-        android:layout_height="39dp"
-        android:cropToPadding="false"
-        android:translationZ="50dp"
-        app:layout_constraintBottom_toBottomOf="@+id/header"
-        app:layout_constraintEnd_toStartOf="@+id/title"
-        app:layout_constraintHorizontal_bias="0.285"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/header"
-        app:srcCompat="@drawable/logo" />
+        app:layout_constraintVertical_bias="0.615"
+        app:srcCompat="@drawable/btn_sair" />
 
     <TextView
         android:id="@+id/textView"

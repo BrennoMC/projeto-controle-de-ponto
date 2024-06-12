@@ -9,7 +9,59 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbarAlwaysDrawVerticalTrack="true">
+
+        <View
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="#1A1C3D"
+            android:translationZ="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="84dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="16dp"
+            android:translationZ="50dp"
+            app:layout_constraintEnd_toEndOf="@+id/header"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/header"
+            app:srcCompat="@drawable/logo" />
+
+        <ImageView
+            android:id="@+id/title"
+            android:layout_width="84dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="16dp"
+            android:translationZ="50dp"
+            app:layout_constraintEnd_toEndOf="@+id/header"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/header"
+            app:srcCompat="@drawable/ctrldeponto" />
+
+        <ImageView
+            android:id="@+id/btnSignOut"
+            android:layout_width="84dp"
+            android:layout_height="44dp"
+            android:translationZ="50dp"
+            app:layout_constraintBottom_toBottomOf="@+id/header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/title"
+            app:layout_constraintTop_toTopOf="@+id/header"
+            app:layout_constraintVertical_bias="0.615"
+            app:srcCompat="@drawable/btn_sair" />
+
 
         <TextView
             android:id="@+id/textView2"
@@ -18,28 +70,30 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="40dp"
-            android:fontFamily="@font/poppins_semi_bold"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/poppins_bold"
             android:text="CALENDÁRIO SEMANAL"
-            android:textSize="26dp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.616"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toBottomOf="@+id/header" />
 
         <Button
             android:id="@+id/btnAdicionarHorario"
             android:layout_width="119dp"
             android:layout_height="42dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#FFAA01"
+            android:fontFamily="@font/poppins_bold"
             android:text="Adicionar"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.949"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.956"
+            app:layout_constraintStart_toEndOf="@+id/seg"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintVertical_bias="0.016"
             tools:ignore="MissingConstraints" />
-
 
         <TextView
             android:id="@+id/seg"
@@ -48,54 +102,43 @@
             android:background="@drawable/border_dia"
             android:gravity="center"
             android:text="SEG"
+            android:fontFamily="@font/poppins_bold"
             android:textAlignment="center"
             android:textColor="#FFF"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.049"
-            app:layout_constraintStart_toStartOf="parent"
 
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.156" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.052"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintVertical_bias="0.04" />
 
         <ScrollView
             android:layout_width="352dp"
             android:layout_height="79dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/ter"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.245"
+            app:layout_constraintHorizontal_bias="0.288"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-            app:layout_constraintVertical_bias="0.122"
+            app:layout_constraintTop_toBottomOf="@+id/seg"
+            app:layout_constraintVertical_bias="1.0"
             tools:ignore="MissingConstraints">
 
-            <LinearLayout
-                android:id="@+id/listaHorariosSeg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="vertical"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.199"></LinearLayout>
         </ScrollView>
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnExcluirSeg"
             android:layout_width="38dp"
             android:layout_height="37dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/ic_base_delete"
+            android:color="@color/dark_blue"
+            app:backgroundTint="@color/dark_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnAdicionarHorario"
-            app:layout_constraintVertical_bias="0.051" />
-
+            app:layout_constraintVertical_bias="0.034" />
 
         <TextView
             android:id="@+id/ter"
@@ -104,25 +147,27 @@
             android:background="@drawable/border_dia"
             android:gravity="center"
             android:text="TER"
+            android:fontFamily="@font/poppins_bold"
             android:textAlignment="center"
             android:textColor="#FFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.043"
+            app:layout_constraintHorizontal_bias="0.049"
             app:layout_constraintStart_toStartOf="parent"
 
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.294" />
+            app:layout_constraintVertical_bias="0.365" />
 
         <ScrollView
             android:layout_width="352dp"
             android:layout_height="79dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/qua"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.202"
+            app:layout_constraintHorizontal_bias="0.288"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-            app:layout_constraintVertical_bias="0.277"
+            app:layout_constraintTop_toBottomOf="@+id/ter"
+            app:layout_constraintVertical_bias="1.0"
             tools:ignore="MissingConstraints">
 
             <LinearLayout
@@ -142,16 +187,17 @@
                 app:layout_constraintVertical_bias="0.199"></LinearLayout>
         </ScrollView>
 
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnExcluirTer"
             android:layout_width="38dp"
             android:layout_height="37dp"
+            android:layout_marginEnd="4dp"
             android:background="@drawable/ic_base_delete"
+            app:backgroundTint="@color/dark_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnAdicionarHorario"
-            app:layout_constraintVertical_bias="0.203" />
+            app:layout_constraintVertical_bias="0.258" />
 
         <TextView
             android:id="@+id/qua"
@@ -162,24 +208,24 @@
             android:text="QUA"
             android:textAlignment="center"
             android:textColor="#FFF"
+            android:fontFamily="@font/poppins_bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.043"
+            app:layout_constraintHorizontal_bias="0.052"
             app:layout_constraintStart_toStartOf="parent"
 
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.423" />
-
+            app:layout_constraintVertical_bias="0.53" />
 
         <ScrollView
+            android:id="@+id/scrollView3"
             android:layout_width="352dp"
             android:layout_height="79dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/qui"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.183"
+            app:layout_constraintHorizontal_bias="0.271"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-            app:layout_constraintVertical_bias="0.429"
+            app:layout_constraintTop_toBottomOf="@+id/qua"
             tools:ignore="MissingConstraints">
 
             <LinearLayout
@@ -203,12 +249,13 @@
             android:id="@+id/btnExcluirQua"
             android:layout_width="38dp"
             android:layout_height="37dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/ic_base_delete"
+            app:backgroundTint="@color/dark_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnAdicionarHorario"
-            app:layout_constraintVertical_bias="0.359" />
+            app:layout_constraintVertical_bias="0.488" />
 
         <TextView
             android:id="@+id/qui"
@@ -219,23 +266,23 @@
             android:text="QUI"
             android:textAlignment="center"
             android:textColor="#FFF"
+            android:fontFamily="@font/poppins_bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.049"
+            app:layout_constraintHorizontal_bias="0.052"
             app:layout_constraintStart_toStartOf="parent"
 
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.554" />
+            app:layout_constraintVertical_bias="0.696" />
 
         <ScrollView
             android:layout_width="352dp"
             android:layout_height="79dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/sex"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.219"
+            app:layout_constraintHorizontal_bias="0.271"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-            app:layout_constraintVertical_bias="0.581"
+            app:layout_constraintTop_toBottomOf="@+id/qui"
             tools:ignore="MissingConstraints">
 
             <LinearLayout
@@ -259,12 +306,13 @@
             android:id="@+id/btnExcluirQui"
             android:layout_width="38dp"
             android:layout_height="37dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/ic_base_delete"
+            app:backgroundTint="@color/dark_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnAdicionarHorario"
-            app:layout_constraintVertical_bias="0.515" />
+            app:layout_constraintVertical_bias="0.703" />
 
         <TextView
             android:id="@+id/sex"
@@ -275,23 +323,25 @@
             android:text="SEX"
             android:textAlignment="center"
             android:textColor="#FFF"
+            android:fontFamily="@font/poppins_bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.049"
+            app:layout_constraintHorizontal_bias="0.052"
             app:layout_constraintStart_toStartOf="parent"
 
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.683" />
+            app:layout_constraintVertical_bias="0.863" />
 
         <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="352dp"
             android:layout_height="79dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.183"
+            app:layout_constraintHorizontal_bias="0.271"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-            app:layout_constraintVertical_bias="0.743"
+            app:layout_constraintTop_toBottomOf="@+id/sex"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="MissingConstraints">
 
             <LinearLayout
@@ -315,12 +365,29 @@
             android:id="@+id/btnExcluirSex"
             android:layout_width="38dp"
             android:layout_height="37dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="4dp"
             android:background="@drawable/ic_base_delete"
+            app:backgroundTint="@color/dark_blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnAdicionarHorario"
-            app:layout_constraintVertical_bias="0.675" />
+            app:layout_constraintVertical_bias="0.928" />
+
+        <LinearLayout
+            android:id="@+id/listaHorariosSeg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.239"></LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

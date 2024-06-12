@@ -98,7 +98,7 @@ class RelatorioFragment : Fragment() {
         }
 
         auth = Firebase.auth
-        binding.btnSair.setOnClickListener{
+        binding.btnSignOut.setOnClickListener{
             auth.signOut()
             val intent = Intent(requireContext(), MainActivity::class.java)
             //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -146,6 +146,9 @@ class RelatorioFragment : Fragment() {
                                     binding.recyclerView.visibility = View.VISIBLE
 
                                 }
+                            }else{
+                                binding.noDataTextView.visibility = View.VISIBLE
+                                binding.recyclerView.visibility = View.GONE
                             }
                             adapter.submitList(points)
                         }
