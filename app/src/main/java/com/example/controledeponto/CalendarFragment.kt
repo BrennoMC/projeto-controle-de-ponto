@@ -1,6 +1,7 @@
 package com.example.controledeponto
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,7 +18,9 @@ import com.example.controledeponto.databinding.FragmentCalendarAdicionarHorarioB
 import com.example.controledeponto.databinding.FragmentCalendarBinding
 import com.example.controledeponto.databinding.FragmentHomeBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -36,6 +39,7 @@ class CalendarFragment : Fragment() {
 
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = _binding!!
+    private lateinit var auth: FirebaseAuth
 
     private lateinit var database: DatabaseReference
 
@@ -63,7 +67,8 @@ class CalendarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val horariosRef = FirebaseDatabase.getInstance().reference.child("horarios")
-        val auth = FirebaseAuth.getInstance()
+        var auth = FirebaseAuth.getInstance()
+
         val id = auth.currentUser?.uid
         val query: Query = horariosRef.orderByChild("userId").equalTo(id)
 
@@ -109,8 +114,16 @@ class CalendarFragment : Fragment() {
             }
         })
 
+        auth = Firebase.auth
+        binding.btnSignOut.setOnClickListener{
+            auth.signOut()
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

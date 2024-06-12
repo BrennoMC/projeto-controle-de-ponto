@@ -66,7 +66,7 @@
             android:translationZ="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.486"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
@@ -377,17 +377,6 @@
             app:layout_constraintHorizontal_bias="0.512"
             app:layout_constraintStart_toStartOf="@+id/registrarPonto"
             app:layout_constraintTop_toTopOf="@+id/registrarPonto" />
-
-        <ImageView
-            android:id="@+id/imageView20"
-            android:layout_width="113dp"
-            android:layout_height="41dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="@+id/view"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/textView"
-            app:layout_constraintTop_toTopOf="@+id/view"
-            app:srcCompat="@drawable/config_icon" />
 
         <!--<ImageView
             android:id="@+id/logo"
