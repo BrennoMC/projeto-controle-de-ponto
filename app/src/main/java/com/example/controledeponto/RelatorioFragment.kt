@@ -151,13 +151,12 @@ class RelatorioFragment : Fragment() {
                                 binding.recyclerView.visibility = View.GONE
                             }
                             adapter.submitList(points)
-
-                            if (points.isEmpty()) {
-                                binding.noDataTextView.visibility = View.VISIBLE
-                                binding.recyclerView.visibility = View.GONE
-                            } else {
-                                binding.noDataTextView.visibility = View.GONE
-                            }
+                        }
+                        if (points.isEmpty()) {
+                            binding.noDataTextView.visibility = View.VISIBLE
+                            binding.recyclerView.visibility = View.GONE
+                        } else {
+                            binding.noDataTextView.visibility = View.GONE
                         }
                     }
 
