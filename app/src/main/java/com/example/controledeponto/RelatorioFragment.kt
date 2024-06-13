@@ -24,31 +24,20 @@ import kotlin.time.ExperimentalTime
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RelatorioFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-
 class CustomSpinnerAdapter(context: Context, resource: Int, objects: List<String>) :
     ArrayAdapter<String>(context, resource, objects) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = super.getView(position, convertView, parent)
         val textView = view.findViewById<TextView>(android.R.id.text1)
-        textView.textSize = 14f // Defina o tamanho da fonte desejado
+        textView.textSize = 14f
         return view
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = super.getDropDownView(position, convertView, parent)
         val textView = view.findViewById<TextView>(android.R.id.text1)
-        textView.textSize = 14f // Defina o tamanho da fonte desejado
+        textView.textSize = 14f
         return view
     }
 }
@@ -69,7 +58,7 @@ class RelatorioFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Usando view binding para inflar o layout do fragmento
+
         val binding = FragmentRelatorioBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -101,7 +90,6 @@ class RelatorioFragment : Fragment() {
         binding.btnSignOut.setOnClickListener{
             auth.signOut()
             val intent = Intent(requireContext(), MainActivity::class.java)
-            //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
     }
@@ -119,51 +107,51 @@ class RelatorioFragment : Fragment() {
             val userRef = databaseReference.getReference("pontos")
             val query: Query = userRef.orderByChild("userId").equalTo(userId)
             query.addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        val points = mutableListOf<Point>()
-                        for (pointSnapshot in dataSnapshot.children) {
-                            val point = pointSnapshot.getValue(Point::class.java)
-                            if (point != null) {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val points = mutableListOf<Point>()
+                    for (pointSnapshot in dataSnapshot.children) {
+                        val point = pointSnapshot.getValue(Point::class.java)
+                        if (point != null) {
 
-                                val formatString = "yyyy-MM-dd HH:mm:ss"
+                            val formatString = "yyyy-MM-dd HH:mm:ss"
 
-                                val dataRecebida = point.timestamp
-                                val dataInicial = "$selectedYear-$selectedMonthIndex-01 00:00:00"
-                                val dataFinal = "$selectedYear-$selectedMonthIndex-31 23:59:59"
+                            val dataRecebida = point.timestamp
+                            val dataInicial = "$selectedYear-$selectedMonthIndex-01 00:00:00"
+                            val dataFinal = "$selectedYear-$selectedMonthIndex-31 23:59:59"
 
-                                val formato = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                            val formato = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
-                                val dataFormatada: Date = formato.parse(dataRecebida)
-                                val dataInicialFormatada: Date = formato.parse(dataInicial)
-                                val dataFinalFormatada: Date = formato.parse(dataFinal)
+                            val dataFormatada: Date = formato.parse(dataRecebida)
+                            val dataInicialFormatada: Date = formato.parse(dataInicial)
+                            val dataFinalFormatada: Date = formato.parse(dataFinal)
 
-                                point.date = dataFormatada
-                                point.month = binding.monthSpinner.selectedItem.toString()
+                            point.date = dataFormatada
+                            point.month = binding.monthSpinner.selectedItem.toString()
 
-                                if (isInDateRange(dataFormatada, dataInicialFormatada, dataFinalFormatada)) {
-                                    //Log.d("Main","$dataFormatada")
-                                    points.add(point)
-                                    binding.recyclerView.visibility = View.VISIBLE
+                            if (isInDateRange(dataFormatada, dataInicialFormatada, dataFinalFormatada)) {
+                                //Log.d("Main","$dataFormatada")
+                                points.add(point)
+                                binding.recyclerView.visibility = View.VISIBLE
 
-                                }
-                            }else{
-                                binding.noDataTextView.visibility = View.VISIBLE
-                                binding.recyclerView.visibility = View.GONE
                             }
-                            adapter.submitList(points)
-                        }
-                        if (points.isEmpty()) {
+                        }else{
                             binding.noDataTextView.visibility = View.VISIBLE
                             binding.recyclerView.visibility = View.GONE
-                        } else {
-                            binding.noDataTextView.visibility = View.GONE
                         }
+                        adapter.submitList(points)
                     }
+                    if (points.isEmpty()) {
+                        binding.noDataTextView.visibility = View.VISIBLE
+                        binding.recyclerView.visibility = View.GONE
+                    } else {
+                        binding.noDataTextView.visibility = View.GONE
+                    }
+                }
 
-                    override fun onCancelled(databaseError: DatabaseError) {
-                        Log.e("RelatorioFragment", "Erro ao buscar dados: ${databaseError.message}")
-                    }
-                })
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.e("RelatorioFragment", "Erro ao buscar dados: ${databaseError.message}")
+                }
+            })
         } else {
             Log.d("RelatorioFragment","Usuário não autenticado")
         }
