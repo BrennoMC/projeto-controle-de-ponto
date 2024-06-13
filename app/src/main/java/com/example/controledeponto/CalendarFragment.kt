@@ -113,17 +113,14 @@ class CalendarFragment : Fragment() {
                 TODO("Not yet implemented")
             }
         })
-
-        auth = Firebase.auth
-        binding.btnSignOut.setOnClickListener{
-            auth.signOut()
-            val intent = Intent(requireContext(), MainActivity::class.java)
-            //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-        }
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
         return binding.root
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -146,6 +143,14 @@ class CalendarFragment : Fragment() {
 
         binding.btnExcluirSex.setOnClickListener {
             deletarHorario("sex")
+        }
+
+        auth = Firebase.auth
+        binding.btnSignOut.setOnClickListener{
+            auth.signOut()
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
         }
 
     }

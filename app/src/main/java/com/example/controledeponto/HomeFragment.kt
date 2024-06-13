@@ -42,6 +42,7 @@ import android.content.Intent
 import android.os.Build
 import android.provider.Settings
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
 import com.google.firebase.database.DataSnapshot
@@ -139,6 +140,7 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -150,7 +152,9 @@ class HomeFragment : Fragment() {
 
         Log.e("USER_DADOS", "USER: $userId, EMAIL: $userEmail, NOME: $userName")
 
-        binding.txtName.text = userName
+        if (userName != null) {
+            binding.txtName.text = "Olá, ${userName.uppercase()}!"
+        }
 
         punchTheClock()
 
@@ -451,6 +455,7 @@ class HomeFragment : Fragment() {
         return (100000..999999).random()
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun checkExactAlarmPermission() {
         val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         if (!alarmManager.canScheduleExactAlarms()) {

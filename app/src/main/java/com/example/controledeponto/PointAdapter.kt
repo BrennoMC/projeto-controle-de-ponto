@@ -24,7 +24,7 @@ class PointAdapter : ListAdapter<Point, PointAdapter.PointViewHolder>(PointDiffC
 
         fun bind(point: Point) {
             binding.textView.text =
-                    point.date.toString() // Aqui você pode exibir os dados do ponto conforme necessário
+                point.date.toString() // Aqui você pode exibir os dados do ponto conforme necessário
         }
     }
 }

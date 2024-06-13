@@ -102,7 +102,7 @@
     <Spinner
         android:id="@+id/monthSpinner"
         android:layout_width="106dp"
-        android:layout_height="21dp"
+        android:layout_height="48dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="12dp"
         android:background="@drawable/background_drilldown"
@@ -117,7 +117,7 @@
     <Spinner
         android:id="@+id/yearSpinner"
         android:layout_width="97dp"
-        android:layout_height="22dp"
+        android:layout_height="48dp"
         android:background="@drawable/background_drilldown"
         android:layout_below="@id/yearSpinner"
         android:layout_centerHorizontal="true"
@@ -129,17 +129,17 @@
     <Button
         android:id="@+id/button"
         android:layout_width="105dp"
-        android:layout_height="38dp"
+        android:layout_height="48dp"
         android:backgroundTint="#FFAA01"
         android:fontFamily="@font/poppins_bold"
         android:text="GERAR"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.456"
+        app:layout_constraintHorizontal_bias="0.619"
         app:layout_constraintStart_toEndOf="@+id/yearSpinner"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.087" />
+        app:layout_constraintVertical_bias="0.119" />
 
     <TextView
         android:id="@+id/noDataTextView"
